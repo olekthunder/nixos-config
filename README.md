@@ -44,6 +44,10 @@ nixos-generate-config --root /mnt
 curl https://raw.githubusercontent.com/olekthunder/nixos-config/master/configuration.nix -o /mnt/etc/nixos/configuration.nix 
 
 
-# install
+# install and reboot
 nixos-install
+reboot
+
+# Then set user password
+passwd olekthunder
 ```
