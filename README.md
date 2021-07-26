@@ -5,10 +5,10 @@
 DISK=/dev/nvme0n1
 
 # Create partitions
-parted $DISK -- mklabel gpt
-parted $DISK -- mkpart ESP fat32 1MiB 512MiB
-parted $DISK -- mkpart primary 512MiB 100%
-parted $DISK -- set 1 esp on
+yes | parted $DISK -- mklabel gpt
+yes | parted $DISK -- mkpart ESP fat32 1MiB 512MiB
+yes | parted $DISK -- mkpart primary 512MiB 100%
+yes | parted $DISK -- set 1 esp on
 
 # Change this
 KEY=/path/to/keyfile
@@ -16,7 +16,7 @@ ROOT=/dev/nvme0n1p2
 BOOT=/dev/nvme0n1p1
 
 # Setup encryption with keyfile
-cryptsetup luksFormat $ROOT $KEY
+yes YES | cryptsetup luksFormat $ROOT $KEY
 cryptsetup luksOpen $ROOT cryptroot --key-file $KEY
 mkfs.ext4 -L nixos /dev/mapper/cryptroot
 mount /dev/disk/by-label/nixos /mnt
@@ -26,4 +26,7 @@ mount $BOOT /mnt/boot
 # Generate config
 curl https://raw.githubusercontent.com/olekthunder/nixos-config/master/configuration.nix -o /mnt/etc/nixos/configuration.nix 
 nixos-generate-config --root /mnt
+
+# install
+nixos-install
 ```
