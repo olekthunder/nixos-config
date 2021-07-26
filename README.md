@@ -24,5 +24,6 @@ mkdir /mnt/boot
 mount $BOOT /mnt/boot
 
 # Generate config
+curl https://raw.githubusercontent.com/olekthunder/nixos-config/master/configuration.nix -o /mnt/etc/nixos/configuration.nix 
 nixos-generate-config --root /mnt
 ```
