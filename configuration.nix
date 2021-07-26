@@ -26,7 +26,6 @@ in {
     "nls_cp437"
     "nls_iso8859_1"
     # for faster io
-    "aes_x86_64"
     "aesni_intel"
     "cryptd"
   ];
