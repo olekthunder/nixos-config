@@ -1,4 +1,4 @@
-# Partitioning
+# Setup
 
 ```bash
 # Change this
@@ -21,4 +21,7 @@ mkfs.ext4 -L nixos /dev/mapper/cryptroot
 mount /dev/disk/by-label/nixos /mnt
 mkdir /mnt/boot
 mount $BOOT /mnt/boot
+
+# Generate config
+nixos-generate-config --root /mnt
 ```
