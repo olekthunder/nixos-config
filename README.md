@@ -22,13 +22,15 @@ KEY=/key/key
 yes YES | cryptsetup luksFormat $ROOT $KEY
 cryptsetup luksOpen $ROOT cryptroot --key-file $KEY
 mkfs.ext4 -L nixos /dev/mapper/cryptroot
+sleep 1  # in case this code is just copied - we must wait for label to be created
 mount /dev/disk/by-label/nixos /mnt
 mkdir /mnt/boot
 mount $BOOT /mnt/boot
 
 # Generate config
-curl https://raw.githubusercontent.com/olekthunder/nixos-config/master/configuration.nix -o /mnt/etc/nixos/configuration.nix 
 nixos-generate-config --root /mnt
+curl https://raw.githubusercontent.com/olekthunder/nixos-config/master/configuration.nix -o /mnt/etc/nixos/configuration.nix 
+
 
 # install
 nixos-install
