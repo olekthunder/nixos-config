@@ -8,6 +8,7 @@ DISK=/dev/nvme0n1
 parted $DISK -- mklabel gpt
 parted $DISK -- mkpart ESP fat32 1MiB 512MiB
 parted $DISK -- mkpart primary 512MiB 100%
+parted $DISK -- set 1 esp on
 
 # Change this
 KEY=/path/to/keyfile
