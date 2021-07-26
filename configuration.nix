@@ -4,7 +4,10 @@
 
 { config, pkgs, ... }:
 
-{
+let
+  # key fs should be fat32 with label "key"
+  KEYFSLABEL = "key";
+in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -13,6 +16,31 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # intird modules
+  boot.initrd.availableKernelModules = [
+    # to mount usb with keyfile
+    "uas"
+    "usbcore"
+    "usb_storage"
+    "vfat"
+    "nls_cp437"
+    "nls_iso8859_1"
+    # for faster io
+    "aes_x86_64"
+    "aesni_intel"
+    "cryptd"
+  ];
+  # Mount USB key before trying to decrypt root filesystem
+  boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
+    mkdir -m 0755 -p /key
+    sleep 2 # To make sure the usb key has been loaded
+    mount -n -t vfat -o ro `findfs LABEL=${KEYFSLABEL}` /key
+  '';
+
+  boot.initrd.luks.devices."cryptroot" = {
+    keyFile = "/key/key";
+    preLVM = false; # If this is true the decryption is attempted before the postDeviceCommands can run
+  };
 
   networking.hostName = "gimli"; # Define your hostname.
   networking.networkmanager.enable = true;
@@ -99,4 +127,3 @@
   system.stateVersion = "21.05"; # Did you read the comment?
 
 }
-
