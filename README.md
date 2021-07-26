@@ -1,3 +1,15 @@
+# Create keyfile
+
+assuming usb stick is mounted at /dev/sdb
+
+```
+yes | parted /dev/sdb -- mklabel gpt
+yes | parted /dev/sdb1 -- mkpart primary 0% 100%
+mkfs.fat -F 32 -n key /dev/sdb1
+mount /dev/sdb1 /mnt
+bs=512 count=8 if=/dev/random of=/mnt/key iflag=fullblock
+```
+
 # Setup
 
 ```bash
