@@ -7,6 +7,7 @@
 let
   # key fs should be fat32 with label "key"
   KEYFSLABEL = "key";
+  USERNAME = "olekthunder";
 in {
   imports =
     [ # Include the results of the hardware scan.
@@ -32,7 +33,7 @@ in {
   # Mount USB key before trying to decrypt root filesystem
   boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
     mkdir -m 0755 -p /key
-    sleep 2 # To make sure the usb key has been loaded
+    sleep 2
     mount -n -t vfat -o ro `findfs LABEL=${KEYFSLABEL}` /key
   '';
 
@@ -65,10 +66,13 @@ in {
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = false;
+  services.xserver.enable = true;
 
-
-  
+  services.xserver.windowManager.awesome.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.defaultSession = "none+awesome";
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = USERNAME;
 
   # Configure keymap in X11
   services.xserver.layout = "us";
@@ -85,7 +89,7 @@ in {
   services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.olekthunder = {
+  users.users.${USERNAME} = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
   }; 
@@ -96,8 +100,20 @@ in {
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     firefox
+    acpi
+    xclip
+    # TODO: move packages below to home manager
+    alacritty
+    tdesktop
+    git
   ];
 
+  nix = {
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+   };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
