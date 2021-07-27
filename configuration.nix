@@ -75,8 +75,8 @@ in {
   services.xserver.displayManager.autoLogin.user = USERNAME;
 
   # Configure keymap in X11
-  services.xserver.layout = "us";
-  services.xserver.xkbOptions = "eurosign:e";
+  services.xserver.layout = "us,ru,ua";
+  services.xserver.xkbOptions = "grp:win_space_toggle";
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
