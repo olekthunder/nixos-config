@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   # key fs should be fat32 with label "key"
@@ -12,7 +12,6 @@ in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.home-manager
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -103,10 +102,11 @@ in {
     firefox
     acpi
     xclip
+    git
   ];
 
-  home-manager.users.${USERNAME} = {
-    packages = with pkgs; [
+  home-manager.users.${USERNAME} = { pkgs, lib, ... }: {
+    home.packages = with pkgs; [
       tdesktop
     ];
 
@@ -120,12 +120,6 @@ in {
     };
   };
 
-  nix = {
-    package = pkgs.nixUnstable;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-   };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
