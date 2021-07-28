@@ -41,6 +41,8 @@ mount $BOOT /mnt/boot
 
 # Clone config
 git clone https://github.com/olekthunder/nixos-config.git /mnt/etc/nixos
+# Generate hadware config 
+nixos-generate-config --root /mnt
 # Install it
 nix-shell -p git -p nixFlakes --run "nixos-install --root /mnt/ --impure --flake /mnt/etc/nixos#gimli"
 
