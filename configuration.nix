@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 let
   # key fs should be fat32 with label "key"
@@ -12,6 +12,7 @@ in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      inputs.home-manager.nixosModules.home-manager
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -102,11 +103,22 @@ in {
     firefox
     acpi
     xclip
-    # TODO: move packages below to home manager
-    alacritty
-    tdesktop
-    git
   ];
+
+  home-manager.users.${USERNAME} = {
+    packages = with pkgs; [
+      tdesktop
+    ];
+
+    programs = {
+      git = {
+        enable = true;
+        userName = USERNAME;
+        userEmail = "zso040399@gmail.com";
+      };
+      alacritty.enable = true;
+    };
+  };
 
   nix = {
     package = pkgs.nixUnstable;

@@ -1,0 +1,58 @@
+{
+  "nodes": {
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1627422633,
+        "narHash": "sha256-9UvA3wn0xap6WLjhE7+90JwCD+PNj630qt721XRC3TQ=",
+        "owner": "rycee",
+        "repo": "home-manager",
+        "rev": "ae8cb242f2e450c525274732af58b3050399f5bd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rycee",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1627475774,
+        "narHash": "sha256-ffgcvM8cJXmD5L1uLaKBuHEGUIUJo6w9E1G+x9hDn7g=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "56dd74b7fec4c63a1fa4cca94665ee11ca7f4826",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1627475774,
+        "narHash": "sha256-ffgcvM8cJXmD5L1uLaKBuHEGUIUJo6w9E1G+x9hDn7g=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "56dd74b7fec4c63a1fa4cca94665ee11ca7f4826",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "root": {
+      "inputs": {
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs_2"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
