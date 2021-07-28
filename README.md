@@ -39,13 +39,11 @@ mount /dev/disk/by-label/nixos /mnt
 mkdir /mnt/boot
 mount $BOOT /mnt/boot
 
-# Generate config
-nixos-generate-config --root /mnt
-curl https://raw.githubusercontent.com/olekthunder/nixos-config/master/configuration.nix -o /mnt/etc/nixos/configuration.nix 
+# Clone config
+git clone https://github.com/olekthunder/nixos-config.git /mnt/etc/nixos
+# Install it
+nix-shell -p git -p nixFlakes --run "nixos-install --root /mnt/ --impure --flake /mnt/etc/nixos#gimli"
 
-
-# install and reboot
-nixos-install
 reboot
 
 # Then set user password
