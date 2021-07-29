@@ -82,16 +82,31 @@ in {
   # services.printing.enable = true;
 
   # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    config.pipewire = {
+      "context.properties" = {
+        #"link.max-buffers" = 64;
+        "link.max-buffers" = 16; # version < 3 clients can't handle more than this
+        "log.level" = 2; # https://docs.pipewire.org/#Logging
+        #"default.clock.rate" = 48000;
+        #"default.clock.quantum" = 1024;
+        #"default.clock.min-quantum" = 32;
+        #"default.clock.max-quantum" = 8192;
+      };
+    };
+  };
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${USERNAME} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" ];
   }; 
 
   # List packages installed in system profile. To search, run:
@@ -103,11 +118,15 @@ in {
     acpi
     xclip
     git
+    htop
+    lsof
+    alsa-utils
   ];
 
   home-manager.users.${USERNAME} = { pkgs, lib, ... }: {
     home.packages = with pkgs; [
       tdesktop
+      pavucontrol
     ];
 
     programs = {
