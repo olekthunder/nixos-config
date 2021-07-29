@@ -31,7 +31,7 @@ BOOT=/dev/nvme0n1p1
 KEY=/key/key
 
 # Setup encryption with keyfile
-yes YES | cryptsetup luksFormat $ROOT $KEY
+yes YES | cryptsetup luksFormat $ROOT $KEY --label cryptroot
 cryptsetup luksOpen $ROOT cryptroot --key-file $KEY
 mkfs.ext4 -L nixos /dev/mapper/cryptroot
 sleep 1  # in case this code is just copied - we must wait for label to be created
