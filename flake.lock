@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "awesome": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1627750759,
+        "narHash": "sha256-whZ86nmnhR6dBnFEDXeMmqaeB5lm0YbShgzWb4lj650=",
+        "owner": "olekthunder",
+        "repo": "awesome-config",
+        "rev": "e909267672de12bc2cae28e75708962903367593",
+        "type": "github"
+      },
+      "original": {
+        "owner": "olekthunder",
+        "repo": "awesome-config",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -39,6 +55,7 @@
     },
     "root": {
       "inputs": {
+        "awesome": "awesome",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs"
       }

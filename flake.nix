@@ -20,6 +20,12 @@
 
   inputs.home-manager.url = "github:nix-community/home-manager/master";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.awesome = {
+    type = "github";
+    owner = "olekthunder";
+    repo = "awesome-config";
+    flake = false;
+  };
 
   outputs = inputs: {
 

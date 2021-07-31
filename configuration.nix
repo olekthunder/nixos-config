@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
   # key fs should be fat32 with label "key"
@@ -123,12 +123,17 @@ in {
     alsa-utils
   ];
 
+  nixpkgs.config.allowUnfree = true;
+
   home-manager.users.${USERNAME} = { pkgs, lib, ... }: {
     home.packages = with pkgs; [
       tdesktop
       pavucontrol
+      vscode
     ];
-
+    xdg.configFile = {
+        "awesome".source = inputs.awesome;
+    };
     programs = {
       git = {
         enable = true;
@@ -136,6 +141,7 @@ in {
         userEmail = "zso040399@gmail.com";
       };
       alacritty.enable = true;
+      rofi.enable = true;     
     };
   };
 
