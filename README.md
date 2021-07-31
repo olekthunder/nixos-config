@@ -51,3 +51,8 @@ reboot
 # Then set user password
 passwd olekthunder
 ```
+
+
+TODO: 
+
+- [] add udev rule via services.udev.extraRules to use keys from usb stick

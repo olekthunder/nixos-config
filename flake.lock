@@ -3,11 +3,11 @@
     "awesome": {
       "flake": false,
       "locked": {
-        "lastModified": 1627750759,
+        "lastModified": 1627758862,
         "narHash": "sha256-whZ86nmnhR6dBnFEDXeMmqaeB5lm0YbShgzWb4lj650=",
         "owner": "olekthunder",
         "repo": "awesome-config",
-        "rev": "e909267672de12bc2cae28e75708962903367593",
+        "rev": "e88fa915d7e1ed0bc93cce83765e1daac069fa20",
         "type": "github"
       },
       "original": {
@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1627422633,
-        "narHash": "sha256-9UvA3wn0xap6WLjhE7+90JwCD+PNj630qt721XRC3TQ=",
+        "lastModified": 1627592512,
+        "narHash": "sha256-+bauwACGl+/dTQB047XImRz5P6Lp6vxl5ruiKjtENxo=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "ae8cb242f2e450c525274732af58b3050399f5bd",
+        "rev": "7f976da06840c268cc291a021bab7532b923713c",
         "type": "github"
       },
       "original": {
