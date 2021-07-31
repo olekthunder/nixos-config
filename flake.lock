@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "dotfiles": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1627759035,
+        "narHash": "sha256-0fwMAvDTCM3FR/7ZytMxXSBJWWj9kaBXkWcDOebEYaw=",
+        "owner": "olekthunder",
+        "repo": "dotfiles",
+        "rev": "040cfeace2886bdb85e958d0fbf23f3e42f772f9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "olekthunder",
+        "repo": "dotfiles",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -56,6 +72,7 @@
     "root": {
       "inputs": {
         "awesome": "awesome",
+        "dotfiles": "dotfiles",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs"
       }

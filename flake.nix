@@ -26,6 +26,12 @@
     repo = "awesome-config";
     flake = false;
   };
+  inputs.dotfiles = {
+    type = "github";
+    owner = "olekthunder";
+    repo = "dotfiles";
+    flake = false;
+  };
 
   outputs = inputs: {
 

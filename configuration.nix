@@ -11,6 +11,7 @@ in {
     ];
 
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
   # intird modules
   boot.initrd.availableKernelModules = [
@@ -53,6 +54,7 @@ in {
   };
 
   services.xserver.enable = true;
+  services.xserver.dpi = 120;
   services.xserver.windowManager.awesome.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.displayManager.defaultSession = "none+awesome";
@@ -104,9 +106,14 @@ in {
       vscode
       jetbrains.pycharm-professional
       slack
+      xorg.xdpyinfo
     ];
+    home.file = {
+      ".Xresources".source = "${inputs.dotfiles}/.Xresources";
+    };
     xdg.configFile = {
         "awesome".source = inputs.awesome;
+        "alacritty/alacritty.yml".source = "${inputs.dotfiles}/.config/alacritty/alacritty.yml";
     };
     programs = {
       git = {
@@ -114,12 +121,23 @@ in {
         userName = USERNAME;
         userEmail = "zso040399@gmail.com";
       };
-      alacritty.enable = true;
+      alacritty = {
+        enable = true;
+        # settings = {
+        #   font = {
+        #     normal.family = "JetBrainsMono Nerd Font";
+        #     bold.family = "JetBrainsMono Nerd Font";
+        #     italic.family = "JetBrainsMono Nerd Font";
+        #     bold_italic.family = "JetBrainsMono Nerd Font";
+        #     size = 14;
+        #   };
+        #   env = {
+        #     WINIT_X11_SCALE_FACTOR = "1.0";
+        #   };
+        # };
+      };
       rofi.enable = true;
     };
-    # fonts = {
-    #   fontconfig.enable = true;
-    # };
     # services = {
     #   picom = {
     #     enable = true;
@@ -134,6 +152,15 @@ in {
     #   };
     # };
   };
+
+  fonts = {
+      enableDefaultFonts = true;
+      fontconfig.enable = true;
+      fonts = with pkgs; [
+        # jetbrains-mono
+        (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+      ];
+    };
 
   system.stateVersion = "21.05"; # Did you read the comment?
 }
