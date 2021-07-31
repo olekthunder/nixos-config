@@ -130,6 +130,7 @@ in {
       tdesktop
       pavucontrol
       vscode
+      jetbrains.pycharm-professional
     ];
     xdg.configFile = {
         "awesome".source = inputs.awesome;
