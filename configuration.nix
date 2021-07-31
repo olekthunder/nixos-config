@@ -76,6 +76,7 @@ in {
     };
   };
   services.xserver.libinput.enable = true;
+  services.xserver.libinput.touchpad.tapping = false;
 
   users.users.${USERNAME} = {
     isNormalUser = true;
@@ -116,6 +117,9 @@ in {
       alacritty.enable = true;
       rofi.enable = true;
     };
+    # fonts = {
+    #   fontconfig.enable = true;
+    # };
     # services = {
     #   picom = {
     #     enable = true;
