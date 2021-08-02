@@ -158,8 +158,18 @@ in {
 
   fonts = {
       enableDefaultFonts = true;
-      fontconfig.enable = true;
+      fontconfig = {
+        enable = true;
+        defaultFonts = {
+          monospace = ["Roboto Mono 13"];
+          sansSerif = ["Roboto 13"];
+          serif = ["Roboto Slab 13"];
+        };
+      };
       fonts = with pkgs; [
+        roboto
+        roboto-mono
+        roboto-slab
         # jetbrains-mono
         (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
       ];
