@@ -138,19 +138,22 @@ in {
       };
       rofi.enable = true;
     };
-    # services = {
-    #   picom = {
-    #     enable = true;
-    #     backend = "glx";
-    #     vSync = true;
-    #     extraOptions = ''
-    #       refresh-rate = 0;
-    #       dbe = false
-    #       detect-client-opacity = true;
-    #       mark-wmwin-focused = true;
-    #       mark-ovredir-focused = true;
-    #   };
-    # };
+    services.picom = {
+      enable = true;
+      backend = "glx";
+      vSync = true;
+      inactiveDim = "0.2";
+      extraOptions = ''
+        mark-wmwin-focused = true;
+        mark-ovredir-focused = true;
+        detect-client-opacity = true;
+        refresh-rate = 0;
+        dbe = false;
+        detect-transient = true;
+        detect-client-leader = true;
+        glx-copy-from-front = false;
+      '';
+    };
   };
 
   fonts = {
