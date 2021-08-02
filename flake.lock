@@ -3,11 +3,11 @@
     "awesome": {
       "flake": false,
       "locked": {
-        "lastModified": 1627758862,
-        "narHash": "sha256-whZ86nmnhR6dBnFEDXeMmqaeB5lm0YbShgzWb4lj650=",
+        "lastModified": 1627913754,
+        "narHash": "sha256-zxz1mJnHKlAEq80s5OJ73WyMA6mN9zVbjL/uCKwfxtk=",
         "owner": "olekthunder",
         "repo": "awesome-config",
-        "rev": "e88fa915d7e1ed0bc93cce83765e1daac069fa20",
+        "rev": "339b083a968f74464deaf368f31bfe0611e25f5f",
         "type": "github"
       },
       "original": {
