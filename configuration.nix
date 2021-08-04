@@ -82,7 +82,7 @@ in {
 
   users.users.${USERNAME} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "audio" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" "docker"];
   }; 
 
   environment.systemPackages = with pkgs; [
@@ -95,6 +95,7 @@ in {
     htop
     lsof
     alsa-utils
+    unzip
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -113,7 +114,7 @@ in {
     };
     xdg.configFile = {
         "awesome".source = inputs.awesome;
-        "alacritty/alacritty.yml".source = "${inputs.dotfiles}/.config/alacritty/alacritty.yml";
+        # "alacritty/alacritty.yml".source = "${inputs.dotfiles}/.config/alacritty/alacritty.yml";
     };
     programs = {
       git = {
@@ -123,18 +124,15 @@ in {
       };
       alacritty = {
         enable = true;
-        # settings = {
-        #   font = {
-        #     normal.family = "JetBrainsMono Nerd Font";
-        #     bold.family = "JetBrainsMono Nerd Font";
-        #     italic.family = "JetBrainsMono Nerd Font";
-        #     bold_italic.family = "JetBrainsMono Nerd Font";
-        #     size = 14;
-        #   };
-        #   env = {
-        #     WINIT_X11_SCALE_FACTOR = "1.0";
-        #   };
-        # };
+        settings = {
+          font = {
+            normal.family = "Roboto Mono";
+            size = 14;
+          };
+          env = {
+            WINIT_X11_SCALE_FACTOR = "1.0";
+          };
+        };
       };
       rofi.enable = true;
     };
@@ -157,23 +155,23 @@ in {
   };
 
   fonts = {
-      enableDefaultFonts = true;
-      fontconfig = {
-        enable = true;
-        defaultFonts = {
-          monospace = ["Roboto Mono 13"];
-          sansSerif = ["Roboto 13"];
-          serif = ["Roboto Slab 13"];
-        };
+    enableDefaultFonts = true;
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        monospace = ["Roboto Mono 13"];
+        sansSerif = ["Roboto 13"];
+        serif = ["Roboto Slab 13"];
       };
-      fonts = with pkgs; [
-        roboto
-        roboto-mono
-        roboto-slab
-        # jetbrains-mono
-        (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-      ];
     };
-
+    fonts = with pkgs; [
+      roboto
+      roboto-mono
+      roboto-slab
+      font-awesome
+      jetbrains-mono
+    ];
+  };
+  virtualisation.docker.enable = true;
   system.stateVersion = "21.05"; # Did you read the comment?
 }
