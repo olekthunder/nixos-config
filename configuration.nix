@@ -174,5 +174,8 @@ in {
     ];
   };
   virtualisation.docker.enable = true;
+  services.udev.extraRules = ''
+     ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", ENV{ID_FS_LABEL}=="key", RUN{program}+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /key"       
+  '';
   system.stateVersion = "21.05"; # Did you read the comment?
 }
