@@ -152,6 +152,7 @@ in {
         glx-copy-from-front = false;
       '';
     };
+    services.syncthing.enable = true;
   };
 
   fonts = {
@@ -159,9 +160,9 @@ in {
     fontconfig = {
       enable = true;
       defaultFonts = {
-        monospace = ["Roboto Mono 13"];
-        sansSerif = ["Roboto 13"];
-        serif = ["Roboto Slab 13"];
+        monospace = ["Roboto Mono"];
+        sansSerif = ["Roboto"];
+        serif = ["Roboto Slab"];
       };
     };
     fonts = with pkgs; [
@@ -169,7 +170,7 @@ in {
       roboto-mono
       roboto-slab
       font-awesome
-      jetbrains-mono
+      fira-code
     ];
   };
   virtualisation.docker.enable = true;
