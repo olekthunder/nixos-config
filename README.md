@@ -5,7 +5,7 @@ assuming usb stick is mounted at /dev/sdb
 ```
 DEVICE=/dev/sdb
 yes | parted $DEVICE -- mklabel gpt
-yes | parted $DEVICE -- mkpart primary 0% 1GB
+yes | parted $DEVICE -- mkpart primary 0% 1GB  # fat produces warning if this is too small
 mkfs.fat -F 32 -n lukskey "$DEVICE"1
 yes | parted $DEVICE -- mkpart primary 1GB 100%
 mkfs.fat -F 32 -n keys "$DEVICE"2
@@ -21,8 +21,8 @@ bs=512 count=8 if=/dev/random of=/mnt/key iflag=fullblock
 # Change this
 DISK=/dev/nvme0n1
 
-# mount key
-mkdir /key && mount `findfs LABEL=key` /key
+# mount lukskey
+mkdir /key && mount `findfs LABEL=lukskey` /key
 
 # Create partitions
 yes | parted $DISK -- mklabel gpt
@@ -60,4 +60,7 @@ passwd olekthunder
 
 TODO: 
 
-- [] add udev rule via services.udev.extraRules to use keys from usb stick
+- [ ] add ssh keys to `findfs LABEL="keys"` and use the via ssh-keygen
+- [ ] find a way to use gpg keys from `findfs LABEL="keys"`
+- [ ] start openvpn service from `findfs LABEL="keys"`
+- [ ] modular config?

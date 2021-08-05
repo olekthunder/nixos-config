@@ -109,7 +109,7 @@ in {
       vscode
       jetbrains.pycharm-professional
       slack
-      xorg.xdpyinfo
+      xorg.xbacklight
     ];
     home.file = {
       ".Xresources".source = "${inputs.dotfiles}/.Xresources";
@@ -176,24 +176,17 @@ in {
     ];
   };
   virtualisation.docker.enable = true;
-  # services.udev.extraRules = ''
-  #    ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", ENV{ID_FS_LABEL}=="key", RUN="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /key"
-  # '';
   systemd.mounts = [
-  { what = "/dev/disk/by-label/${KEYS_FSLABEL}";
-    where = "/keys";
-    # options = "errors=remount-ro";
-    # mountConfig = {
-      # TimeoutSec = "1";
-      # uid = 1000;
-    # };
-  }
-];
-systemd.automounts = [
-  { where = "/key";
-    # automountConfig = { TimeoutIdleSec = "1"; };
-    wantedBy = [ "graphical.target" ];
-  }
-];
+    {
+      what = "/dev/disk/by-label/${KEYS_FSLABEL}";
+      where = "/keys";
+    }
+  ];
+  systemd.automounts = [
+    {
+      where = "/keys";
+      wantedBy = [ "default.target" ];
+    }
+  ];
   system.stateVersion = "21.05"; # Did you read the comment?
 }
