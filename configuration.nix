@@ -2,7 +2,8 @@
 
 let
   # key fs should be fat32 with label "key"
-  KEYFSLABEL = "key";
+  LUKSKEY_FSLABEL = "lukskey";
+  KEYS_FSLABEL = "keys";
   USERNAME = "olekthunder";
 in {
   imports =
@@ -31,12 +32,12 @@ in {
   boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
     mkdir -m 0755 -p /key
     sleep 2
-    mount -n -t vfat -o ro `findfs LABEL=${KEYFSLABEL}` /key
+    mount -n -t vfat -o ro `findfs LABEL=${LUKSKEY_FSLABEL}` /key
   '';
   boot.initrd.luks.devices."cryptroot" = {
     keyFile = "/key/key";
     preLVM = false; # If this is true the decryption is attempted before the postDeviceCommands can run
-    postOpenCommands = "${pkgs.umount}/bin/umount /key";
+    # postOpenCommands = "${pkgs.umount}/bin/umount /key";
   };
 
   networking.hostName = "gimli";
@@ -175,8 +176,24 @@ in {
     ];
   };
   virtualisation.docker.enable = true;
-  services.udev.extraRules = ''
-     ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", ENV{ID_FS_LABEL}=="key", RUN{program}+="${pkgs.mount}/bin/mount -t vfat -o sync,noatime,ro $devnode /key"
-  '';
+  # services.udev.extraRules = ''
+  #    ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", ENV{ID_FS_LABEL}=="key", RUN="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /key"
+  # '';
+  systemd.mounts = [
+  { what = "/dev/disk/by-label/${KEYS_FSLABEL}";
+    where = "/keys";
+    # options = "errors=remount-ro";
+    # mountConfig = {
+      # TimeoutSec = "1";
+      # uid = 1000;
+    # };
+  }
+];
+systemd.automounts = [
+  { where = "/key";
+    # automountConfig = { TimeoutIdleSec = "1"; };
+    wantedBy = [ "graphical.target" ];
+  }
+];
   system.stateVersion = "21.05"; # Did you read the comment?
 }
