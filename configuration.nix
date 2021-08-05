@@ -36,6 +36,7 @@ in {
   boot.initrd.luks.devices."cryptroot" = {
     keyFile = "/key/key";
     preLVM = false; # If this is true the decryption is attempted before the postDeviceCommands can run
+    postOpenCommands = "umount /key";
   };
 
   networking.hostName = "gimli";
