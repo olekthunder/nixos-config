@@ -5,8 +5,12 @@ assuming usb stick is mounted at /dev/sdb
 ```
 DEVICE=/dev/sdb
 yes | parted $DEVICE -- mklabel gpt
-yes | parted $DEVICE -- mkpart primary 0% 100%
-mkfs.fat -F 32 -n key "$DEVICE"1
+yes | parted $DEVICE -- mkpart primary 0% 1GB
+mkfs.fat -F 32 -n lukskey "$DEVICE"1
+yes | parted $DEVICE -- mkpart primary 1GB 100%
+mkfs.fat -F 32 -n keys "$DEVICE"2
+
+# create keyfile
 mount "$DEVICE"1 /mnt
 bs=512 count=8 if=/dev/random of=/mnt/key iflag=fullblock
 ```
