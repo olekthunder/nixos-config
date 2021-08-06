@@ -84,7 +84,7 @@ in {
 
   users.users.${USERNAME} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "audio" "docker"];
+    extraGroups = [ "wheel" "networkmanager" "audio" "docker" "video" ];
   }; 
 
   environment.systemPackages = with pkgs; [
@@ -101,6 +101,8 @@ in {
   ];
 
   nixpkgs.config.allowUnfree = true;
+
+  programs.light.enable = true;
 
   home-manager.users.${USERNAME} = { pkgs, lib, ... }: {
     home.packages = with pkgs; [
