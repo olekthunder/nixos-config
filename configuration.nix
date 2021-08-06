@@ -4,6 +4,7 @@ let
   # key fs should be fat32 with label "key"
   LUKSKEY_FSLABEL = "lukskey";
   KEYS_FSLABEL = "keys";
+  KEYS_MOUNTPOINT = "keys";
   USERNAME = "olekthunder";
 in {
   imports =
@@ -98,11 +99,13 @@ in {
     lsof
     alsa-utils
     unzip
+    nix-index
   ];
 
   nixpkgs.config.allowUnfree = true;
 
   programs.light.enable = true;
+  programs.ssh.startAgent = true;
 
   home-manager.users.${USERNAME} = { pkgs, lib, ... }: {
     home.packages = with pkgs; [
@@ -180,15 +183,36 @@ in {
   virtualisation.docker.enable = true;
   systemd.mounts = [
     {
+      # enable = true;
+      wantedBy = [ "multi-user.target" ];
       what = "/dev/disk/by-label/${KEYS_FSLABEL}";
-      where = "/keys";
+      where = "/${KEYS_MOUNTPOINT}";
     }
   ];
-  systemd.automounts = [
-    {
-      where = "/keys";
-      wantedBy = [ "default.target" ];
-    }
-  ];
+  # systemd.automounts = [
+  #   {
+  #     where = "/${KEYS_MOUNTPOINT}";
+  #     wantedBy = [ "default.target" ];
+  #   }
+  # ];
+  systemd.user.services.add-ssh-keys = let
+    addSshKeys = pkgs.writeScript "add-ssh-keys"
+      ''
+      #!/bin/sh
+      ${pkgs.openssh}/bin/ssh-add /keys/ssh/id_ed25519
+      '';
+    keysMount = "${KEYS_MOUNTPOINT}.mount";
+  in {
+    description = "Add ssh keys to agent";
+    after = [ keysMount ];
+    requires = [ keysMount ];
+    wantedBy = ["multi-user.target"];
+    environment = {
+      SSH_AUTH_SOCK = "%t/ssh-agent";
+    };
+    serviceConfig = {
+      ExecStart = addSshKeys;
+    };
+  };
   system.stateVersion = "21.05"; # Did you read the comment?
 }
