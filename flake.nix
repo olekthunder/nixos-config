@@ -16,27 +16,31 @@
 # sudo nix flake update --commit-lock-file /etc/nixos
 
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-  inputs.home-manager.url = "github:nix-community/home-manager/master";
-  inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.awesome = {
-    type = "github";
-    owner = "olekthunder";
-    repo = "awesome-config";
-    flake = false;
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    awesome = {
+      type = "github";
+      owner = "olekthunder";
+      repo = "awesome-config";
+      flake = false;
+    };
+    dotfiles = {
+      type = "github";
+      owner = "olekthunder";
+      repo = "dotfiles";
+      flake = false;
+    };
+    flake-utils.url = "github:numtide/flake-utils";
   };
-  inputs.dotfiles = {
-    type = "github";
-    owner = "olekthunder";
-    repo = "dotfiles";
-    flake = false;
-  };
 
-  outputs = inputs: {
-
+  outputs = inputs: 
+  let
+    system = "x86_64-linux";
+  in {
     nixosConfigurations.gimli = inputs.nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      inherit system;
       # Things in this set are passed to modules and accessible
       # in the top-level arguments (e.g. `{ pkgs, lib, inputs, ... }:`).
       specialArgs = {
@@ -56,6 +60,14 @@
         ./configuration.nix
       ];
     };
-
+    # nix run '.#repl'
+    apps.${system}.repl = inputs.flake-utils.lib.mkApp {
+        drv = inputs.nixpkgs.legacyPackages.${system}.writeShellScriptBin "repl" ''
+          confnix=$(mktemp)
+          echo "builtins.getFlake (toString $(git rev-parse --show-toplevel))" >$confnix
+          trap "rm $confnix" EXIT
+          nix repl $confnix
+        '';
+      };
   };
 }
