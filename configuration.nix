@@ -6,6 +6,7 @@ let
   KEYS_FSLABEL = "keys";
   KEYS_MOUNTPOINT = "/keys";
   USERNAME = "olekthunder";
+  WM = "awesome";
 in {
   imports =
     [
@@ -58,14 +59,11 @@ in {
 
   services.xserver.enable = true;
   services.xserver.dpi = 120;
-  services.xserver.windowManager.awesome.enable = true;
+  services.xserver.windowManager."${WM}".enable = true;
   services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.displayManager.defaultSession = "none+awesome";
+  services.xserver.displayManager.defaultSession = "none+${WM}";
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = USERNAME;
-
-  services.xserver.layout = "us,ru,ua";
-  services.xserver.xkbOptions = "grp:win_space_toggle";
 
   security.rtkit.enable = true;
   services.pipewire = {
@@ -112,6 +110,14 @@ in {
   '';
 
   home-manager.users.${USERNAME} = { pkgs, lib, ... }: {
+    xsession = {
+      enable = true;
+      windowManager."${WM}".enable = true;
+    };
+    home.keyboard = {
+      layout = "us,ru,ua";
+      options = ["grp:win_space_toggle"];
+    };
     home.packages = with pkgs; [
       tdesktop
       pavucontrol
@@ -119,6 +125,7 @@ in {
       jetbrains.pycharm-professional
       slack
       xorg.xbacklight
+      yadm
     ];
     home.file = {
       ".Xresources".source = "${inputs.dotfiles}/.Xresources";
@@ -169,7 +176,7 @@ in {
       gpg-agent = {
         enable = true;
         enableSshSupport = true;
-        # pinentryFlavor = "gtk2";
+        enableScDaemon = false;
       };
     };
   };
@@ -200,23 +207,5 @@ in {
       where = KEYS_MOUNTPOINT;
     }
   ];
-  systemd.user.services.add-ssh-keys = let
-    addSshKeys = pkgs.writeScript "add-ssh-keys"
-      ''
-      #!/bin/sh
-      ${pkgs.openssh}/bin/ssh-add ${KEYS_MOUNTPOINT}/ssh/id_ed25519
-      '';
-  in {
-    description = "Add ssh keys";
-    after = [ "gpg-agent.service" ];
-    requires = [ "gpg-agent.service" ];
-    wantedBy = [ "default.target" ];
-    environment = {
-      SSH_AUTH_SOCK = "%t/ssh-agent";
-    };
-    serviceConfig = {
-      ExecStart = addSshKeys;
-    };
-  };
   system.stateVersion = "21.05";
 }
