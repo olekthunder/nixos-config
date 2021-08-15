@@ -52,7 +52,6 @@
         }
         ./configuration.nix
       ];
-      
     };
     # nix run '.#repl'
     apps.${system}.repl = inputs.flake-utils.lib.mkApp {
@@ -64,7 +63,7 @@
         '';
       };
     overlay = final: prev: {
-      lets-cli = final.callPackage ./overlays/lets.nix { };
+      lets = final.callPackage ./overlays/lets.nix { };
     };
   };
 }

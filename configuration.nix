@@ -99,7 +99,6 @@ in {
     alsa-utils
     unzip
     nix-index
-    lets-cli
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -131,6 +130,7 @@ in {
       pamixer
       alacritty
       keepassxc
+      lets
     ];
     programs = {
       git = {
