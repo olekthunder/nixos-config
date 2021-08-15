@@ -57,10 +57,36 @@ reboot
 passwd olekthunder
 ```
 
+# Post-install
+
+### Add ssh keys
+
+```bash
+for f in $(find /keys/ssh -type f ! -name "*.*"); do ssh-add f; done
+```
+
+### Import gpg keys
+
+```bash
+for f in /keys/gpg/*; do gpg --import $f; done
+```
+
+### Pull dotfiles
+
+```
+yadm clone git@github.com:olekthunder/dotfiles.git 
+```
+
+### Install firefox extensions:
+
+- https://addons.mozilla.org/uk/firefox/addon/keepassxc-browser/
+- https://addons.mozilla.org/uk/firefox/addon/ublock-origin/
+
+Setup syncthing at http://localhost:8384/
+
+Enable firefox browser integration in `keepassxc -> settings -> browser integration`
+
 
 TODO: 
 
-- [ ] add ssh keys to `findfs LABEL="keys"` and use the via ssh-keygen
-- [ ] find a way to use gpg keys from `findfs LABEL="keys"`
-- [ ] start openvpn service from `findfs LABEL="keys"`
 - [ ] modular config?
