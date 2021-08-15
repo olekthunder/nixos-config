@@ -36,7 +36,6 @@
       };
       modules = [
         inputs.home-manager.nixosModules.home-manager
-
         ({ pkgs, ... }: {
           nix.extraOptions = "experimental-features = nix-command flakes";
           nix.package = pkgs.nixFlakes;
@@ -44,9 +43,16 @@
 
           home-manager.useGlobalPkgs = true;
         })
-
+        {
+          config.nixpkgs = {
+            overlays = [
+              inputs.self.overlay
+            ];
+          };
+        }
         ./configuration.nix
       ];
+      
     };
     # nix run '.#repl'
     apps.${system}.repl = inputs.flake-utils.lib.mkApp {
@@ -57,5 +63,11 @@
           nix repl $confnix
         '';
       };
+    overlay = final: prev: {
+      lets-cli = final.callPackage ./overlays/lets.nix { };
+    };
+    # overlay = final: prev: {
+    #   lets = inputs.nixpkgs.lib.runCommand "lets-cli" { src = inputs.lets; } "mkdir -p $out/bin; cp $src/lets $out/bin/lets; chmod +x $out/bin/lets";
+    # };
   };
 }
