@@ -82,9 +82,13 @@ yadm clone git@github.com:olekthunder/dotfiles.git
 - https://addons.mozilla.org/uk/firefox/addon/keepassxc-browser/
 - https://addons.mozilla.org/uk/firefox/addon/ublock-origin/
 
-Setup syncthing at http://localhost:8384/
+### Setup syncthing
 
-Enable firefox browser integration in `keepassxc -> settings -> browser integration`
+http://localhost:8384/
+
+### Enable firefox browser integration
+
+`keepassxc -> settings -> browser integration`
 
 
 TODO: 
