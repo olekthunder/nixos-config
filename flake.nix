@@ -66,8 +66,5 @@
     overlay = final: prev: {
       lets-cli = final.callPackage ./overlays/lets.nix { };
     };
-    # overlay = final: prev: {
-    #   lets = inputs.nixpkgs.lib.runCommand "lets-cli" { src = inputs.lets; } "mkdir -p $out/bin; cp $src/lets $out/bin/lets; chmod +x $out/bin/lets";
-    # };
   };
 }
