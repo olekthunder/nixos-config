@@ -128,31 +128,14 @@ in {
       xorg.xbacklight
       yadm
       pamixer
+      alacritty
+      keepassxc
     ];
-    home.file = {
-      ".Xresources".source = "${inputs.dotfiles}/.Xresources";
-    };
-    xdg.configFile = {
-        "awesome".source = inputs.awesome;
-        # "alacritty/alacritty.yml".source = "${inputs.dotfiles}/.config/alacritty/alacritty.yml";
-    };
     programs = {
       git = {
         enable = true;
         userName = USERNAME;
         userEmail = "zso040399@gmail.com";
-      };
-      alacritty = {
-        enable = true;
-        settings = {
-          font = {
-            normal.family = "Roboto Mono";
-            size = 14;
-          };
-          env = {
-            WINIT_X11_SCALE_FACTOR = "1.0";
-          };
-        };
       };
       rofi.enable = true;
       gpg.enable = true;
@@ -209,5 +192,8 @@ in {
       where = KEYS_MOUNTPOINT;
     }
   ];
+  services.openvpn.servers = {
+    work = { config = "config ${KEYS_MOUNTPOINT}/openvpn/work.conf"; };
+  };
   system.stateVersion = "21.05";
 }

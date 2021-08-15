@@ -1,37 +1,5 @@
 {
   "nodes": {
-    "awesome": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1629034229,
-        "narHash": "sha256-JEIvLv5sh1aDICB4Bd8N1ToYlMhcRKEJH/Mka0/bd+U=",
-        "owner": "olekthunder",
-        "repo": "awesome-config",
-        "rev": "3b6fd4f81c5a87f8dbfe37aebdb30993f9b0ced9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "olekthunder",
-        "repo": "awesome-config",
-        "type": "github"
-      }
-    },
-    "dotfiles": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1627759035,
-        "narHash": "sha256-0fwMAvDTCM3FR/7ZytMxXSBJWWj9kaBXkWcDOebEYaw=",
-        "owner": "olekthunder",
-        "repo": "dotfiles",
-        "rev": "040cfeace2886bdb85e958d0fbf23f3e42f772f9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "olekthunder",
-        "repo": "dotfiles",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "locked": {
         "lastModified": 1623875721,
@@ -86,8 +54,6 @@
     },
     "root": {
       "inputs": {
-        "awesome": "awesome",
-        "dotfiles": "dotfiles",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs"

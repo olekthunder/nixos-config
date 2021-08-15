@@ -20,18 +20,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    awesome = {
-      type = "github";
-      owner = "olekthunder";
-      repo = "awesome-config";
-      flake = false;
-    };
-    dotfiles = {
-      type = "github";
-      owner = "olekthunder";
-      repo = "dotfiles";
-      flake = false;
-    };
     flake-utils.url = "github:numtide/flake-utils";
   };
 
