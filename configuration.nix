@@ -132,6 +132,7 @@ in {
       keepassxc
       lets
       starship
+      docker-compose
     ];
     programs = {
       git = {
