@@ -133,6 +133,7 @@ in {
       lets
       starship
       docker-compose
+      go
     ];
     programs = {
       git = {
@@ -196,7 +197,10 @@ in {
     }
   ];
   services.openvpn.servers = {
-    work = { config = "config ${KEYS_MOUNTPOINT}/openvpn/work.conf"; };
+    work = {
+      config = "config ${KEYS_MOUNTPOINT}/openvpn/work.conf";
+      updateResolvConf = true;
+    };
   };
   system.stateVersion = "21.05";
 }
