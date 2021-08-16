@@ -21,6 +21,8 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
+    envfs.url = "github:Mic92/envfs";
+    envfs.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs: 
@@ -36,6 +38,7 @@
       };
       modules = [
         inputs.home-manager.nixosModules.home-manager
+        inputs.envfs.nixosModules.envfs
         ({ pkgs, ... }: {
           nix.extraOptions = "experimental-features = nix-command flakes";
           nix.package = pkgs.nixFlakes;
