@@ -131,6 +131,7 @@ in {
       alacritty
       keepassxc
       lets
+      starship
     ];
     programs = {
       git = {
