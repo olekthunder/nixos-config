@@ -119,6 +119,7 @@ in {
       layout = "us,ru,ua";
       options = ["grp:win_space_toggle"];
     };
+    home.file.".icons/default".source = "${pkgs.numix-cursor-theme}/share/icons/Numix-Cursor-Light";
     home.packages = with pkgs; [
       tdesktop
       pavucontrol
