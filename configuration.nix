@@ -134,6 +134,7 @@ in {
       starship
       docker-compose
       go
+      maim
     ];
     programs = {
       git = {
