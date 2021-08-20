@@ -41,7 +41,8 @@ in {
     preLVM = false; # If this is true the decryption is attempted before the postDeviceCommands can run
     # postOpenCommands = "${pkgs.umount}/bin/umount /key";
   };
-
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
   networking.hostName = "gimli";
   networking.networkmanager.enable = true;
 
