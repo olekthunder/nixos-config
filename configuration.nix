@@ -136,6 +136,7 @@ in {
       docker-compose
       go
       maim
+      postgresql
     ];
     programs = {
       git = {
