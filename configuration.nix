@@ -102,6 +102,8 @@ in {
     nix-index
   ];
 
+  boot.extraModulePackages = [config.boot.kernelPackages.rtl88xxau-aircrack];
+
   nixpkgs.config.allowUnfree = true;
 
   programs.light.enable = true;
@@ -204,6 +206,7 @@ in {
     work = {
       config = "config ${KEYS_MOUNTPOINT}/openvpn/work.conf";
       updateResolvConf = true;
+      autoStart = false;
     };
   };
   system.stateVersion = "21.05";
