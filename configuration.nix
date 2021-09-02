@@ -100,6 +100,12 @@ in {
     alsa-utils
     unzip
     nix-index
+    aircrack-ng
+    nmap
+    iw
+    gcc
+    jq
+    neovim
   ];
 
   boot.extraModulePackages = [config.boot.kernelPackages.rtl88xxau-aircrack];
@@ -113,7 +119,7 @@ in {
     IdentitiesOnly yes
   '';
 
-  home-manager.users.${USERNAME} = { pkgs, lib, ... }: {
+  home-manager.users.${USERNAME} = { pkgs, lib, ... }: rec {
     xsession = {
       enable = true;
       windowManager."${WM}".enable = true;
@@ -140,7 +146,15 @@ in {
       go
       maim
       postgresql
+      nodejs
+      gnumake
+      zoom-us
     ];
+    home.sessionVariables = rec {
+      GOPATH = "$HOME/go";
+      GOBIN = "${GOPATH}/bin";
+    };
+    home.sessionPath = ["${home.sessionVariables.GOBIN}"];
     programs = {
       git = {
         enable = true;
