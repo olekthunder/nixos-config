@@ -41,6 +41,9 @@ in {
     preLVM = false; # If this is true the decryption is attempted before the postDeviceCommands can run
     # postOpenCommands = "${pkgs.umount}/bin/umount /key";
   };
+  boot.kernel.sysctl = {
+    "fs.inotify.max_user_watches" = "1048576";
+  };
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   networking.hostName = "gimli";
@@ -106,12 +109,18 @@ in {
     gcc
     jq
     neovim
+    dig
+    bintools
   ];
 
   boot.extraModulePackages = [config.boot.kernelPackages.rtl88xxau-aircrack];
 
   nixpkgs.config.allowUnfree = true;
 
+  programs.command-not-found.enable = false;
+  programs.bash.interactiveShellInit = ''
+    source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+  '';
   programs.light.enable = true;
   programs.ssh.extraConfig = ''
     Host *
@@ -149,10 +158,17 @@ in {
       nodejs
       gnumake
       zoom-us
+      libreoffice
+      cargo
+      rustc
+      rustfmt
+      protobuf
+      chromium
     ];
     home.sessionVariables = rec {
       GOPATH = "$HOME/go";
       GOBIN = "${GOPATH}/bin";
+      RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
     };
     home.sessionPath = ["${home.sessionVariables.GOBIN}"];
     programs = {
@@ -201,6 +217,7 @@ in {
       };
     };
     fonts = with pkgs; [
+      corefonts
       roboto
       roboto-mono
       roboto-slab
