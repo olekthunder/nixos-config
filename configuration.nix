@@ -207,7 +207,6 @@ in {
   };
 
   fonts = {
-    enableDefaultFonts = true;
     fontconfig = {
       enable = true;
       defaultFonts = {
