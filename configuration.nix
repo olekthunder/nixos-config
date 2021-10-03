@@ -164,6 +164,12 @@ in {
       rustfmt
       protobuf
       chromium
+      transmission-qt
+      haruna
+      vlc
+      jdk
+      p7zip
+      kubectl
     ];
     home.sessionVariables = rec {
       GOPATH = "$HOME/go";
@@ -223,6 +229,8 @@ in {
       roboto-slab
       font-awesome
       fira-code
+      ubuntu_font_family
+      dejavu_fonts
     ];
   };
   virtualisation.docker.enable = true;
