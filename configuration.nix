@@ -141,7 +141,6 @@ in {
     home.packages = with pkgs; [
       tdesktop
       pavucontrol
-      vscode
       jetbrains.pycharm-professional
       slack
       xorg.xbacklight
@@ -170,6 +169,7 @@ in {
       jdk
       p7zip
       kubectl
+      anki
     ];
     home.sessionVariables = rec {
       GOPATH = "$HOME/go";
@@ -178,6 +178,22 @@ in {
     };
     home.sessionPath = ["${home.sessionVariables.GOBIN}"];
     programs = {
+      vscode = {
+        enable = true;
+        package = pkgs.vscodium;
+        extensions = with pkgs.vscode-extensions; [
+          vadimcn.vscode-lldb
+          bbenoist.nix
+          tamasfe.even-better-toml
+          eamodio.gitlens
+          golang.go
+          github.github-vscode-theme
+          # ms-python.python
+          formulahendry.code-runner
+          matklad.rust-analyzer
+          serayuzgur.crates
+        ];
+      };
       git = {
         enable = true;
         userName = USERNAME;
